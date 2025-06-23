@@ -1,0 +1,366 @@
+{% extends "base.html" %}
+
+{% block title %}대시보드 - 골프 스윙 분석{% endblock %}
+
+{% block content %}
+<style>
+    .dashboard-header {
+        background: linear-gradient(135deg, #2e8b57, #98fb98);
+        color: white;
+        padding: 40px 0;
+        margin-bottom: 30px;
+    }
+    
+    .stat-card {
+        border: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        height: 100%;
+    }
+    
+    .stat-card:hover {
+        transform: translateY(-8px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+    }
+    
+    .stat-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        color: white;
+        margin: 0 auto 15px;
+    }
+    
+    .stat-icon.upload { background: linear-gradient(45deg, #28a745, #20c997); }
+    .stat-icon.analysis { background: linear-gradient(45deg, #007bff, #6610f2); }
+    .stat-icon.history { background: linear-gradient(45deg, #fd7e14, #e83e8c); }
+    
+    .stat-number {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #2e8b57;
+        margin-bottom: 5px;
+    }
+    
+    .action-card {
+        border: none;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        transition: all 0.3s ease;
+        text-decoration: none;
+        color: inherit;
+        height: 100%;
+    }
+    
+    .action-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        text-decoration: none;
+        color: inherit;
+    }
+    
+    .action-icon {
+        font-size: 3rem;
+        margin-bottom: 20px;
+    }
+    
+    .action-icon.upload { color: #28a745; }
+    .action-icon.history { color: #007bff; }
+    
+    .recent-videos-section {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        padding: 30px;
+    }
+    
+    .video-item {
+        background: #f8f9fa;
+        border-radius: 10px;
+        padding: 20px;
+        margin-bottom: 15px;
+        transition: all 0.3s ease;
+        border-left: 4px solid #2e8b57;
+    }
+    
+    .video-item:hover {
+        background: #e9ecef;
+        transform: translateX(5px);
+    }
+    
+    .video-item:last-child {
+        margin-bottom: 0;
+    }
+    
+    .video-icon {
+        width: 50px;
+        height: 50px;
+        border-radius: 10px;
+        background: linear-gradient(45deg, #2e8b57, #98fb98);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 1.2rem;
+    }
+    
+    .video-meta {
+        font-size: 0.9rem;
+        color: #6c757d;
+        margin-top: 5px;
+    }
+    
+    .video-meta i {
+        margin-right: 5px;
+        width: 15px;
+    }
+    
+    .video-status {
+        padding: 5px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 500;
+        text-transform: uppercase;
+    }
+    
+    .video-status.completed {
+        background: #d4edda;
+        color: #155724;
+    }
+    
+    .video-status.pending {
+        background: #f8d7da;
+        color: #721c24;
+    }
+    
+    .empty-state {
+        text-align: center;
+        padding: 60px 20px;
+        color: #6c757d;
+    }
+    
+    .empty-state i {
+        font-size: 4rem;
+        margin-bottom: 20px;
+        color: #dee2e6;
+    }
+    
+    @media (max-width: 768px) {
+        .dashboard-header {
+            padding: 30px 0;
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+        }
+        
+        .action-icon {
+            font-size: 2.5rem;
+        }
+    }
+</style>
+
+<!-- Dashboard Header -->
+<div class="dashboard-header">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-8">
+                <h1 class="mb-2"><i class="fas fa-tachometer-alt"></i> 대시보드</h1>
+                <p class="mb-0 opacity-75">안녕하세요, {{ current_user.username }}님! 골프 스윙 분석 현황을 확인해보세요.</p>
+            </div>
+            <div class="col-md-4 text-md-end mt-3 mt-md-0">
+                <div class="d-flex align-items-center justify-content-md-end">
+                    <div class="bg-white bg-opacity-25 rounded-circle p-3 me-3">
+                        <i class="fas fa-user fa-2x"></i>
+                    </div>
+                    <div>
+                        <h5 class="mb-0">{{ current_user.username }}</h5>
+                        <small class="opacity-75">{{ current_user.email }}</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="container">
+    <!-- Statistics Cards -->
+    <div class="row mb-4">
+        <div class="col-md-4 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <div class="stat-icon upload">
+                        <i class="fas fa-upload"></i>
+                    </div>
+                    <div class="stat-number">{{ current_user.videos|length }}</div>
+                    <h6 class="card-title text-muted">업로드된 비디오</h6>
+                    <p class="card-text small">총 분석 비디오 수</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <div class="stat-icon analysis">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <div class="stat-number">{{ current_user.videos|selectattr('prediction_result')|list|length }}</div>
+                    <h6 class="card-title text-muted">완료된 분석</h6>
+                    <p class="card-text small">분석 완료된 비디오</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-3">
+            <div class="card stat-card">
+                <div class="card-body text-center">
+                    <div class="stat-icon history">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <div class="stat-number">{{ recent_videos|length }}</div>
+                    <h6 class="card-title text-muted">최근 활동</h6>
+                    <p class="card-text small">최근 업로드된 비디오</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Action Cards -->
+    <div class="row mb-5">
+        <div class="col-md-6 mb-3">
+            <a href="{{ url_for('upload_video') }}" class="action-card card">
+                <div class="card-body text-center py-5">
+                    <div class="action-icon upload">
+                        <i class="fas fa-cloud-upload-alt"></i>
+                    </div>
+                    <h4 class="card-title">새 비디오 업로드</h4>
+                    <p class="card-text text-muted">골프 스윙 비디오를 업로드하고 AI 분석을 시작하세요</p>
+                    <span class="btn btn-golf">업로드 시작 <i class="fas fa-arrow-right ms-2"></i></span>
+                </div>
+            </a>
+        </div>
+        <div class="col-md-6 mb-3">
+            <a href="{{ url_for('video_history') }}" class="action-card card">
+                <div class="card-body text-center py-5">
+                    <div class="action-icon history">
+                        <i class="fas fa-folder-open"></i>
+                    </div>
+                    <h4 class="card-title">분석 히스토리</h4>
+                    <p class="card-text text-muted">이전에 분석한 모든 비디오를 확인하고 관리하세요</p>
+                    <span class="btn btn-outline-primary">히스토리 보기 <i class="fas fa-arrow-right ms-2"></i></span>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Recent Videos Section -->
+    <div class="recent-videos-section">
+        <h3 class="mb-4">
+            <i class="fas fa-clock text-primary me-2"></i>
+            최근 분석된 비디오
+        </h3>
+        
+        {% if recent_videos %}
+            {% for video in recent_videos %}
+            <div class="video-item">
+                <div class="row align-items-center">
+                    <div class="col-auto">
+                        <div class="video-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <h6 class="mb-1">{{ video.stored_filename }}</h6>
+                        <div class="video-meta">
+                            <div class="d-flex flex-wrap gap-3">
+                                <span><i class="fas fa-calendar"></i>{{ video.upload_time.strftime('%Y-%m-%d %H:%M') }}</span>
+                                {% if video.frame_count %}
+                                <span><i class="fas fa-film"></i>{{ video.frame_count }}프레임</span>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-auto">
+                        {% if video.prediction_result %}
+                            <span class="skill-badge skill-{{ video.prediction_result }}">
+                                {{ video.prediction_result|title }}
+                            </span>
+                        {% else %}
+                            <span class="video-status pending">분석 대기</span>
+                        {% endif %}
+                    </div>
+                    <div class="col-auto">
+                        <a href="{{ url_for('video_detail', video_id=video.id) }}" class="btn btn-sm btn-outline-primary">
+                            <i class="fas fa-eye"></i> 상세보기
+                        </a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+            
+            {% if current_user.videos|length > 5 %}
+            <div class="text-center mt-4">
+                <a href="{{ url_for('video_history') }}" class="btn btn-golf">
+                    모든 비디오 보기 <i class="fas fa-arrow-right ms-2"></i>
+                </a>
+            </div>
+            {% endif %}
+        {% else %}
+            <div class="empty-state">
+                <i class="fas fa-video-slash"></i>
+                <h4>아직 분석된 비디오가 없습니다</h4>
+                <p class="mb-4">첫 번째 골프 스윙 비디오를 업로드하고 AI 분석을 경험해보세요!</p>
+                <a href="{{ url_for('upload_video') }}" class="btn btn-golf btn-lg">
+                    <i class="fas fa-plus me-2"></i>첫 비디오 업로드하기
+                </a>
+            </div>
+        {% endif %}
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 카드 애니메이션 효과
+    const cards = document.querySelectorAll('.stat-card, .action-card');
+    
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry, index) => {
+            if (entry.isIntersecting) {
+                setTimeout(() => {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }, index * 100);
+            }
+        });
+    });
+
+    cards.forEach(card => {
+        card.style.opacity = '0';
+        card.style.transform = 'translateY(20px)';
+        card.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+        observer.observe(card);
+    });
+
+    // 통계 숫자 카운트업 애니메이션
+    const statNumbers = document.querySelectorAll('.stat-number');
+    statNumbers.forEach(statNumber => {
+        const finalNumber = parseInt(statNumber.textContent);
+        let currentNumber = 0;
+        const increment = finalNumber / 20;
+        
+        const timer = setInterval(() => {
+            currentNumber += increment;
+            if (currentNumber >= finalNumber) {
+                currentNumber = finalNumber;
+                clearInterval(timer);
+            }
+            statNumber.textContent = Math.floor(currentNumber);
+        }, 50);
+    });
+});
+</script>
+{% endblock %}

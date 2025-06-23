@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block content %}
+{% if not current_user.is_authenticated %}
+<section class="hero-section">
+    <div class="container text-center">
+        <h1 class="display-4 mb-4">
+            <i class="fas fa-golf-ball"></i> 골프 스윙 분석 시스템
+        </h1>
+        <p class="lead mb-4">AI를 활용한 정확한 골프 스윙 분석으로 당신의 실력을 한 단계 업그레이드하세요!</p>
+        <a href="{{ url_for('register') }}" class="btn btn-light btn-lg me-3">
+            <i class="fas fa-user-plus"></i> 지금 시작하기
+        </a>
+        <a href="{{ url_for('login') }}" class="btn btn-outline-light btn-lg">
+            <i class="fas fa-sign-in-alt"></i> 로그인
+        </a>
+    </div>
+</section>
+
+<section class="container py-5">
+    <div class="row">
+        <div class="col-md-4 mb-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-upload fa-3x text-success mb-3"></i>
+                    <h5 class="card-title">비디오 업로드</h5>
+                    <p class="card-text">골프 스윙 동영상을 쉽게 업로드하고 분석을 시작하세요.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-brain fa-3x text-primary mb-3"></i>
+                    <h5 class="card-title">AI 분석</h5>
+                    <p class="card-text">최신 딥러닝 기술로 스윙 자세와 실력을 정확하게 분석합니다.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4 mb-4">
+            <div class="card text-center h-100">
+                <div class="card-body">
+                    <i class="fas fa-chart-line fa-3x text-warning mb-3"></i>
+                    <h5 class="card-title">실력 평가</h5>
+                    <p class="card-text">아마추어부터 프로까지, 당신의 골프 실력을 객관적으로 평가합니다.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% else %}
+<div class="container py-5">
+    <div class="row">
+        <div class="col-md-8">
+            <h2>안녕하세요, {{ current_user.username }}님!</h2>
+            <p class="text-muted">골프 스윙 분석을 시작해보세요.</p>
+            
+            <div class="d-grid gap-2 d-md-flex justify-content-md-start mb-4">
+                <a href="{{ url_for('upload_video') }}" class="btn btn-golf btn-lg me-md-2">
+                    <i class="fas fa-upload"></i> 새 동영상 분석
+                </a>
+                <a href="{{ url_for('video_history') }}" class="btn btn-outline-secondary btn-lg">
+                    <i class="fas fa-history"></i> 분석 기록 보기
+                </a>
+            </div>
+            
+            {% if recent_videos %}
+            <h4>최근 분석 결과</h4>
+            <div class="row">
+                {% for video in recent_videos %}
+                <div class="col-md-6 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h6 class="card-title">{{ video.stored_filename }}</h6>
+                            <p class="card-text">
+                                <small class="text-muted">{{ video.upload_time.strftime('%Y-%m-%d %H:%M') }}</small>
+                            </p>
+                            {% if video.prediction_result %}
+                            <span class="skill-badge skill-{{ video.prediction_result }}">
+                                {{ video.prediction_result|title }}
+                            </span>
+                            {% endif %}
+                            <div class="mt-2">
+                                <a href="{{ url_for('video_detail', video_id=video.id) }}" class="btn btn-sm btn-outline-primary">상세보기</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+            {% endif %}
+        </div>
+        <div class="col-md-4">
+            <div class="card">
+                <div class="card-header">
+                    <h5><i class="fas fa-info-circle"></i> 사용 안내</h5>
+                </div>
+                <div class="card-body">
+                    <ol>
+                        <li>골프 스윙 동영상을 촬영합니다</li>
+                        <li>'새 동영상 분석' 버튼을 클릭합니다</li>
+                        <li>동영상 파일을 업로드합니다</li>
+                        <li>AI 분석 결과를 확인합니다</li>
+                        <li>분석 기록에서 과거 결과를 비교합니다</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endif %}
+{% endblock %}

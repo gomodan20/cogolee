@@ -1,0 +1,57 @@
+{% extends "base.html" %}
+
+{% block title %}비디오 업로드 - 골프 스윙 분석{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card">
+                <div class="card-header text-center">
+                    <h3><i class="fas fa-upload"></i> 골프 스윙 동영상 업로드</h3>
+                </div>
+                <div class="card-body">
+                    <form method="POST" enctype="multipart/form-data" id="uploadForm">
+                        <!-- 사용자가 원하는 영상 이름 입력 -->
+                        <div class="mb-4">
+                            <label for="video_name" class="form-label">저장할 영상 이름</label>
+                            <input type="text" class="form-control" id="video_name" name="video_name" 
+                                   placeholder="예: my_swing_2023" required>
+                            <div class="form-text">
+                                영상 파일명과 별개로, 저장 시 사용되는 이름입니다.
+                            </div>
+                        </div>
+                        
+                        <!-- 사용자 영상 업로드 -->
+                        <div class="mb-4">
+                            <label for="video" class="form-label">동영상 파일 선택</label>
+                            <input type="file" class="form-control" id="video" name="video" 
+                                   accept="video/*" required>
+                            <div class="form-text">
+                                <i class="fas fa-info-circle"></i> 
+                                지원 형식: MP4, AVI, MOV (최대 500MB)
+                            </div>
+                        </div>
+                        
+                        <div class="alert alert-info">
+                            <h6><i class="fas fa-lightbulb"></i> 촬영 팁</h6>
+                            <ul class="mb-0">
+                                <li>전신이 모두 보이도록 촬영해주세요</li>
+                                <li>밝은 곳에서 촬영하면 더 정확한 분석이 가능합니다</li>
+                                <li>카메라를 고정하고 촬영해주세요</li>
+                                <li>스윙 전체 동작이 포함되도록 해주세요</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-golf btn-lg">
+                                <i class="fas fa-upload"></i> 업로드 및 분석 시작
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

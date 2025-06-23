@@ -1,0 +1,147 @@
+{% extends "base.html" %}
+
+{% block title %}분석 기록 - 골프 스윙 분석{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <!-- 그래프 추가 -->
+    <div class="mb-5">
+        <h4 class="mb-3"><i class="fas fa-chart-line"></i> 분석 결과 추이</h4>
+        <canvas id="resultChart" height="100"></canvas>
+    </div>
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2><i class="fas fa-history"></i> 분석 기록</h2>
+        <a href="{{ url_for('upload_video') }}" class="btn btn-golf">
+            <i class="fas fa-plus"></i> 새 분석
+        </a>
+    </div>
+
+    {% if videos %}
+    <div class="row">
+        {% for video in videos %}
+        <div class="col-md-6 col-lg-4 mb-4">
+            <div class="card h-100">
+                <div class="card-body">
+                    <h6 class="card-title">
+                        {% if video.stored_filename %}
+                            {{ video.stored_filename }}
+                        {% else %}
+                            {{ video.original_filename or 'Unknown Video' }}
+                        {% endif %}
+                    </h6>
+                    <p class="card-text">
+                        <small class="text-muted">
+                            <i class="fas fa-calendar"></i> {{ video.upload_time.strftime('%Y-%m-%d %H:%M') }}
+                        </small>
+                    </p>
+                    
+                    {% if video.prediction_result %}
+                    <div class="mb-2">
+                        <span class="skill-badge skill-{{ video.prediction_result }}">
+                            {{ video.prediction_result|title }}
+                        </span>
+                    </div>
+                    {% else %}
+                    <span class="badge bg-warning">분석 대기중</span>
+                    {% endif %}
+                </div>
+                <div class="card-footer">
+                    <div class="btn-group w-100" role="group">
+                        <a href="{{ url_for('video_detail', video_id=video.id) }}" 
+                           class="btn btn-outline-primary btn-sm">상세보기</a>
+                        {% if not video.prediction_result %}
+                        <a href="{{ url_for('analyze_video', video_id=video.id) }}" 
+                           class="btn btn-outline-success btn-sm">분석하기</a>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+    {% else %}
+    <div class="text-center py-5">
+        <i class="fas fa-golf-ball fa-4x text-muted mb-3"></i>
+        <h4>분석 기록이 없습니다</h4>
+        <p class="text-muted">첫 번째 골프 스윙 분석을 시작해보세요!</p>
+        <a href="{{ url_for('upload_video') }}" class="btn btn-golf">
+            <i class="fas fa-upload"></i> 동영상 업로드
+        </a>
+    </div>
+    {% endif %}
+</div>
+
+<!-- Chart.js CDN 및 스크립트 -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+    const labelMap = { 'amateur': 0, 'semipro': 1, 'pro': 2, 'legend': 3 };
+    const displayMap = ['Amateur', 'Semipro', 'Pro', 'Legend'];
+
+    const labels = [
+    {% for video in videos|sort(attribute='upload_time') if video.prediction_result %}
+        "{{ video.upload_time.strftime('%m-%d %H:%M') }}",
+    {% endfor %}
+    ];
+
+    const data = [
+        {% for video in videos|sort(attribute='upload_time') if video.prediction_result %}
+            labelMap["{{ video.prediction_result|lower }}"],
+      {% endfor %}
+    ];
+
+    const ctx = document.getElementById('resultChart').getContext('2d');
+    new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: labels,
+            datasets: [{
+                label: '분석 등급',
+                data: data,
+                borderColor: '#2c3e50',
+                backgroundColor: 'rgba(44, 62, 80, 0.2)',
+                tension: 0.3,
+                pointRadius: 5,
+                pointHoverRadius: 7
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                y: {
+                    ticks: {
+                        callback: function(value) {
+                            return displayMap[value];
+                        },
+                        stepSize: 1
+                    },
+                    min: 0,
+                    max: 3,
+                    title: {
+                        display: true,
+                        text: '분석 등급'
+                    }
+                },
+                x: {
+                    title: {
+                        display: true,
+                        text: '분석 시간'
+                    }
+                }
+            },
+            plugins: {
+                legend: {
+                    display: false
+                },
+                tooltip: {
+                    callbacks: {
+                        label: function(context) {
+                            return displayMap[context.parsed.y];
+                        }
+                    }
+                }
+            }
+        }
+    });
+</script>
+{% endblock %}
