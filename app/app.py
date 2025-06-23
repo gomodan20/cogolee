@@ -97,7 +97,7 @@ class GolfAnalysisModel:
             print(f"사용 디바이스: {self.device}")
             
             # YOLO 모델 로드
-            yolo_path = os.path.join(app.root_path, 'model', 'best_resized_yolo_최종.pt')
+            yolo_path = os.path.join(app.root_path, 'model', 'yolo.pt')
             self.yolo_model = YOLO(yolo_path)
             print("✅ YOLO 모델 로드 완료")
             
