@@ -159,4 +159,63 @@ def train_model(data_root_dir, model_save_dir, project_name, weighted=True,
     )
     
     preds_loss, labels_loss = evaluate_and_visualize(
-        model, model_loss_path, test_loader
+        model, model_loss_path, test_loader, device, num_class,
+        "Best Val Loss", project_dir, timestamp
+    )
+
+    print(f"\n🎯 최종 결과:")
+    print(f"📁 모델 저장 경로: {project_dir}")
+    print(f"📊 Best Validation Accuracy: {best_val_acc:.4f}")
+    print(f"📉 Best Validation Loss: {best_val_loss:.4f}")
+
+    return {
+        'preds_acc': preds_acc,
+        'labels_acc': labels_acc,
+        'preds_loss': preds_loss,
+        'labels_loss': labels_loss,
+        'best_val_acc': best_val_acc,
+        'best_val_loss': best_val_loss,
+        'project_dir': project_dir
+    }
+
+
+def main():
+    """
+    Main function to run training with default parameters.
+    """
+    # Default paths - modify these according to your setup
+    data_root_dir = "D:/STGCN/data/processed_data_last"
+    model_save_dir = "D:/STGCN/model"
+    
+    # Training configuration
+    config = {
+        'data_root_dir': data_root_dir,
+        'model_save_dir': model_save_dir,
+        'project_name': 'golf_swing_classification',
+        'weighted': True,
+        'val_size': TRAIN_CONFIG['val_size'],
+        'test_size': TRAIN_CONFIG['test_size'],
+        'batch_size': TRAIN_CONFIG['batch_size'],
+        'num_class': MODEL_CONFIG['num_class'],
+        'num_epochs': TRAIN_CONFIG['num_epochs'],
+        'early_stop_patience': TRAIN_CONFIG['early_stop_patience']
+    }
+    
+    print("🏌️ Golf Swing Classification Training")
+    print("=" * 50)
+    print(f"Data Directory: {config['data_root_dir']}")
+    print(f"Model Save Directory: {config['model_save_dir']}")
+    print(f"Weighted Sampling: {config['weighted']}")
+    print(f"Batch Size: {config['batch_size']}")
+    print(f"Max Epochs: {config['num_epochs']}")
+    print("=" * 50)
+    
+    # Start training
+    results = train_model(**config)
+    
+    print("\n✅ 훈련이 성공적으로 완료되었습니다!")
+    return results
+
+
+if __name__ == "__main__":
+    main()
