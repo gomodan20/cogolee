@@ -1,6 +1,6 @@
 # Golf Swing Classification using ST-GCN
 
-이 프로젝트는 ST-GCN (Spatial-Temporal Graph Convolutional Networks)을 사용하여 골프 스윙 동작을 분류하는 딥러닝 모델입니다.
+ST-GCN (Spatial-Temporal Graph Convolutional Networks)을 사용하여 골프 스윙 동작을 분류하는 딥러닝 모델입니다.
 
 ## 🏌️ 프로젝트 개요
 
@@ -9,14 +9,14 @@
 ## 📁 프로젝트 구조
 
 ```
-golf-swing-classification/
+stgcn/
 ├── config.py              # 설정 파일
 ├── dataset.py             # 데이터셋 클래스 및 데이터 로딩
 ├── loss_functions.py      # 커스텀 손실 함수
 ├── training_utils.py      # 훈련 및 평가 유틸리티
 ├── visualization.py       # 시각화 도구
 ├── train.py              # 메인 훈련 스크립트
-├── STGCN.py              # ST-GCN 모델 (별도 구현 필요)
+├── STGCN.py              # ST-GCN 모델
 ├── requirements.txt       # 필요한 패키지 목록
 └── README.md             # 프로젝트 설명서
 ```
