@@ -103,13 +103,13 @@ class GolfAnalysisModel:
             
             # STGCN 모델 로드
             try:
-                import STGCNbackbone
+                import STGCN
                 
                 if torch.cuda.is_available():
                     torch.cuda.empty_cache()
                 gc.collect()
                 
-                self.stgcn_model = STGCNbackbone.Model(
+                self.stgcn_model = STGCN.Model(
                     in_channels=2,
                     num_class=3,
                     graph_args={'layout': 'golf', 'strategy': 'spatial'}
