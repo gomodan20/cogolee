@@ -241,7 +241,7 @@
 
 ### 🎥 시연 영상
 - 본 프로젝트의 주요 기능 및 동작 과정을 시연한 데모
-<video src="./video/demo.mp4" controls width="600"></video>
+👉 [YouTube로 보기]([https://www.youtube.com/watch?v=영상ID](https://youtu.be/c6_HHAyw0Bs)
 - Flask 웹 UI 예시는 발표 자료(PPT)에 캡처 포함. 실시간 추론과 결과 시각화 기능을 시연 영상에서 확인 가능.
 
 ### 📄 발표 자료
