@@ -144,8 +144,7 @@
   - **학습 환경**: 
     - 총 학습시간: 약 23시간 (88에폭, Colab Pro)
     - 1에폭당 평균: 약 16분 (로컬 GPU 대비 5.6배 개선)
-      ![mAP50-95 Chart](./yolo/results/YOLO Pose mAP50-95.png)
-
+      ![mAP50-95 Chart](./yolo/results/YOLO_Pose_mAP50-95.png)
 - **ST-GCN 모델**
   - **데이터 분포**
 	  - **1차 학습**
