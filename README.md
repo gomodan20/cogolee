@@ -163,9 +163,9 @@
     - 테스트 샘플: 503개
   - **1차 학습**
     - 정확도/손실 그래프  
-    ![ST-GCN 1차 학습](./images/ST-GCN/st-gcn_1st.png)
+    ![ST-GCN 1차 학습](./stgcn/images/st-gcn_1st.png)
     - Confusion Matrix  
-    ![ST-GCN 1차 Confusion Matrix](./images/ST-GCN/st-gcn_1st_confusionmatrix.png)
+    ![ST-GCN 1차 Confusion Matrix](./stgcn/images/st-gcn_1st_confusionmatrix.png)
   - **2차 학습 (2클래스)**
     - 정확도: 0.97
     - Macro F1: 0.88 | Weighted F1: 0.97
@@ -173,9 +173,9 @@
     - 테스트 샘플: 503개
   - **2차 학습**
       - 정확도/손실 그래프  
-      ![ST-GCN 2차 학습](./images/ST-GCN/st_gcn_2nd.png)
+      ![ST-GCN 2차 학습](./stgcn/images/st_gcn_2nd.png)
       - Confusion Matrix  
-      ![ST-GCN 2차 Confusion Matrix](./images/ST-GCN/st-gcn_2n_confusionmatrix.png)
+      ![ST-GCN 2차 Confusion Matrix](./stgcn/images/st-gcn_2n_confusionmatrix.png)
   - **2차 학습 상세 결과**  
     - **클래스 상세 성능**
       - **Class 0**: Precision 0.97 | Recall 1.00 | F1-score **0.99** | Support 242
