@@ -161,32 +161,7 @@ TRAIN_CONFIG = {
 ### 시각화 커스터마이징
 `visualization.py`에서 플롯 스타일이나 추가 시각화를 구현할 수 있습니다.
 
-## 📋 TODO
-
-- [ ] 모델 앙상블 구현
-- [ ] 실시간 추론 스크립트 추가
-- [ ] 웹 인터페이스 개발
-- [ ] 더 많은 평가 메트릭 추가
-- [ ] 하이퍼파라미터 자동 튜닝
-
-## 🤝 기여
-
-프로젝트 개선을 위한 기여를 환영합니다!
-
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
 
 ## 📄 라이선스
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
-## 📞 문의
-
-문제가 있거나 질문이 있으시면 이슈를 생성해 주세요.
-
----
-
-⭐ 이 프로젝트가 도움이 되었다면 스타를 눌러주세요!
