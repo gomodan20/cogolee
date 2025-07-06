@@ -15,8 +15,8 @@ stgcn/
 ├── loss_functions.py      # 커스텀 손실 함수
 ├── training_utils.py      # 훈련 및 평가 유틸리티
 ├── visualization.py       # 시각화 도구
-├── train.py              # 메인 훈련 스크립트
-├── STGCN.py              # ST-GCN 모델
+├── train.py               # 메인 훈련 스크립트
+├── STGCN.py               # ST-GCN 모델 스켈레톤
 ├── requirements.txt       # 필요한 패키지 목록
 └── README.md             # 프로젝트 설명서
 ```
