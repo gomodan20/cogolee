@@ -24,7 +24,7 @@ pip install opencv-python
 pip install numpy
 
 ### 5. 🏋️ Training Instructions
-For Colab training: [YOLOv8 Pose Training Notebook](./yolo/0527_yolo_train2.ipynb)
+For Colab training: [YOLOv8_Pose_Training_Notebook](./yolo/0527_yolo_train2.ipynb)
 
 #### 6. 🧪 Evaluation / Testing
 python evaluate.py --weights best.pt --data config.yaml --imgsz 640
