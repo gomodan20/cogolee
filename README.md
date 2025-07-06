@@ -67,8 +67,10 @@
   - 데이터 출처: AI-Hub [스포츠 사람 동작 (골프)](https://aihub.or.kr/aihubdata/data/view.do?dataSetSn=123456)
   - 데이터 다운로드
     - 학습에 사용된 데이터는 용량이 커서 구글 드라이브에 업로드
-      [YOLO 학습용 데이터 다운로드 (Google Drive)]([](https://drive.google.com/drive/u/0/folders/1f7YxHBSD_b7ujTHw-FryRHMuq1cxWaFT)
-      [ST-GCN 학습용 데이터 다운로드 (Google Drive)](https://drive.google.com/drive/u/0/folders/19l4ufcrpGtHiCgMqTJwbIrEgFIG4jCHg)
+      - YOLO 학습용 데이터 다운로드 (Google Drive)]
+         (https://drive.google.com/drive/u/0/folders/1f7YxHBSD_b7ujTHw-FryRHMuq1cxWaFT)
+      - ST-GCN 학습용 데이터 다운로드 (Google Drive)]
+         (https://drive.google.com/drive/u/0/folders/19l4ufcrpGtHiCgMqTJwbIrEgFIG4jCHg)
 - 해당 데이터는 AIHub 회원가입 후 다운로드할 수 있으며, 공개 라이선스 하에 제공받음
   - 데이터 구성: train (98,093), val (10,765), test (24,158)
   - 어노테이션 포맷: AI-Hub 제공 저작도구 사용
