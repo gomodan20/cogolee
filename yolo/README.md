@@ -30,4 +30,4 @@ For Colab training: [YOLOv8 Pose Training Notebook](./yolo/0527_yolo_train2.ipyn
 python evaluate.py --weights best.pt --data config.yaml --imgsz 640
 
 ##### 7. 🎯 Results
-- mAP: [mAP50-95](./yolo/results/YOLO_Pose_mAP50-95.png)
+- mAP: ![mAP50-95 Chart](./yolo/results/YOLO_Pose_mAP50-95.png)
