@@ -7,6 +7,7 @@
 
 ## 3. 📁 Directory Structure
 yolo/
+
 ├── 0527_yolo_train2.ipynb              
 ├── evaluate_yolo_model.ipynb      
 ├── yolo_validation.py 
@@ -23,10 +24,10 @@ pip install opencv-python
 pip install numpy
 
 ### 5. 🏋️ Training Instructions
-For Colab training: ![YOLOv8 Pose Training Notebook](./yolo/0527_yolo_train2.ipynb)
+For Colab training: [YOLOv8 Pose Training Notebook](./yolo/0527_yolo_train2.ipynb)
 
 #### 6. 🧪 Evaluation / Testing
 python evaluate.py --weights best.pt --data config.yaml --imgsz 640
 
 ##### 7. 🎯 Results
-- mAP: ![mAP50-95](./yolo/results/YOLO_Pose_mAP50-95.png)
+- mAP: [mAP50-95](./yolo/results/YOLO_Pose_mAP50-95.png)
