@@ -111,7 +111,7 @@ results = train_model(
 ```
 0: head           8: left_wrist
 1: neck           9: hip (center)
-2: chest         10: right_hip
+2: chest          10: right_hip
 3: right_shoulder 11: left_hip
 4: left_shoulder  12: right_knee
 5: right_elbow    13: left_knee
